@@ -83,6 +83,7 @@ export interface UserPublic {
   created_at: string;
   encrypted_profile?: string | null; // base64 encrypted blob
   is_instance_admin?: boolean;
+  is_system?: boolean;
   totp_enabled?: boolean;
 }
 
@@ -112,6 +113,7 @@ export interface UserProfileResponse {
   mutual_server_count: number;
   roles?: RoleResponse[];
   encrypted_profile?: string | null; // base64 encrypted blob
+  is_system?: boolean;
 }
 
 export interface UpdateProfileRequest {
@@ -217,6 +219,7 @@ export interface ServerResponse {
   my_permissions?: string; // i64 as string for JS BigInt safety
   system_channel_id?: string; // channel where system messages (joins, etc.) are posted
   icon_url?: string;
+  is_system?: boolean;
 }
 
 // ─── Channels ──────────────────────────────────────────
@@ -481,6 +484,7 @@ export interface ServerMemberResponse {
   nickname?: string | null;
   role_ids: string[];
   timed_out_until?: string | null;
+  is_system?: boolean;
 }
 
 // ─── Roles & Permissions ─────────────────────────────
@@ -608,6 +612,7 @@ export interface FriendResponse {
   status: string;       // "pending", "accepted"
   is_incoming: boolean;  // true if the other user sent the request
   created_at: string;
+  is_system?: boolean;
 }
 
 export interface FriendRequestBody {
