@@ -1,6 +1,6 @@
 {
   "name": "@haven-chat-org/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Haven shared core — crypto, networking, and types",
   "license": "AGPL-3.0-or-later",
   "type": "module",
