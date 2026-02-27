@@ -400,8 +400,8 @@ export type WsServerMessage =
   | { type: "Pong" }
   | { type: "SenderKeysUpdated"; payload: { channel_id: string } }
   | { type: "MessageDeleted"; payload: { message_id: string; channel_id: string } }
-  | { type: "ReactionAdded"; payload: { message_id: string; channel_id: string; sender_token: string; emoji: string } }
-  | { type: "ReactionRemoved"; payload: { message_id: string; channel_id: string; sender_token: string; emoji: string } }
+  | { type: "ReactionAdded"; payload: { message_id: string; channel_id: string; user_id: string; sender_token: string; emoji: string } }
+  | { type: "ReactionRemoved"; payload: { message_id: string; channel_id: string; user_id: string; sender_token: string; emoji: string } }
   | { type: "PresenceUpdate"; payload: { user_id: string; status: string } }
   | { type: "FriendRequestReceived"; payload: { from_user_id: string; from_username: string; friendship_id: string } }
   | { type: "FriendRequestAccepted"; payload: { user_id: string; username: string; friendship_id: string } }
