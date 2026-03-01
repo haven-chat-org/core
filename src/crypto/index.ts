@@ -1,5 +1,5 @@
 export { initSodium, getSodium, toBase64, fromBase64, randomBytes } from "./utils.js";
-export { encryptFile, decryptFile, type EncryptedFile } from "./file.js";
+export { encryptFile, decryptFile, hashFile, type EncryptedFile } from "./file.js";
 export {
   type IdentityKeyPair,
   type DHKeyPair,
