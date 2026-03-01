@@ -246,6 +246,7 @@ export interface ChannelResponse {
   is_private: boolean;
   encrypted: boolean;
   export_allowed: boolean;
+  message_ttl?: number | null;
 }
 
 // ─── Channel Categories ───────────────────────────────
@@ -421,6 +422,8 @@ export type WsServerMessage =
   | { type: "MemberTimedOut"; payload: { server_id: string; user_id: string; timed_out_until: string | null } }
   | { type: "ReadStateUpdated"; payload: { channel_id: string; last_read_at: string } }
   | { type: "ServerUpdated"; payload: { server_id: string } }
+  | { type: "ChannelSettingsUpdated"; payload: { channel_id: string; message_ttl: number | null; updated_by: string } }
+  | { type: "MessagesExpired"; payload: { channel_id: string; message_ids: string[] } }
   | { type: "Hello"; payload: { session_id: string; heartbeat_interval_ms: number } }
   | { type: "Resumed"; payload: { replayed_count: number } }
   | { type: "InvalidSession" };
