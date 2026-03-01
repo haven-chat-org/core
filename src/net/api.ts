@@ -289,6 +289,10 @@ export class HavenApi {
     await this.delete(`/api/v1/channels/${channelId}`);
   }
 
+  async setChannelTtl(channelId: string, messageTtl: number | null): Promise<void> {
+    await this.put(`/api/v1/channels/${channelId}/message-ttl`, { message_ttl: messageTtl });
+  }
+
   async listDmChannels(): Promise<ChannelResponse[]> {
     return this.get<ChannelResponse[]>("/api/v1/dm");
   }
