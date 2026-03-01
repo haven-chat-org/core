@@ -73,6 +73,15 @@ import type {
   AdminStats,
   AdminUserResponse,
   SetAdminRequest,
+  AdminReportResponse,
+  UpdateReportRequest,
+  ReportCounts,
+  InstanceBanResponse,
+  CreateInstanceBanRequest,
+  BlockedHashResponse,
+  CreateBlockedHashRequest,
+  ContentFilterResponse,
+  CreateContentFilterRequest,
   InviteRequiredResponse,
   RegistrationInviteResponse,
   GifSearchResponse,
@@ -566,6 +575,79 @@ export class HavenApi {
 
   async adminDeleteUser(userId: string): Promise<void> {
     await this.delete(`/api/v1/admin/users/${userId}`);
+  }
+
+  // ─── Admin Reports ─────────────────────────────────
+
+  async listAdminReports(status?: string, limit?: number, offset?: number): Promise<AdminReportResponse[]> {
+    const params = new URLSearchParams();
+    if (status) params.set("status", status);
+    if (limit !== undefined) params.set("limit", String(limit));
+    if (offset !== undefined) params.set("offset", String(offset));
+    const qs = params.toString();
+    return this.get<AdminReportResponse[]>(`/api/v1/admin/reports${qs ? `?${qs}` : ""}`);
+  }
+
+  async getReportCounts(): Promise<ReportCounts> {
+    return this.get<ReportCounts>("/api/v1/admin/reports/counts");
+  }
+
+  async getAdminReport(reportId: string): Promise<AdminReportResponse> {
+    return this.get<AdminReportResponse>(`/api/v1/admin/reports/${reportId}`);
+  }
+
+  async updateAdminReport(reportId: string, body: UpdateReportRequest): Promise<AdminReportResponse> {
+    return this.put<AdminReportResponse>(`/api/v1/admin/reports/${reportId}`, body);
+  }
+
+  // ─── Instance Bans ─────────────────────────────────
+
+  async listInstanceBans(limit?: number, offset?: number): Promise<InstanceBanResponse[]> {
+    const params = new URLSearchParams();
+    if (limit !== undefined) params.set("limit", String(limit));
+    if (offset !== undefined) params.set("offset", String(offset));
+    const qs = params.toString();
+    return this.get<InstanceBanResponse[]>(`/api/v1/admin/bans${qs ? `?${qs}` : ""}`);
+  }
+
+  async instanceBanUser(userId: string, body: CreateInstanceBanRequest): Promise<InstanceBanResponse> {
+    return this.post<InstanceBanResponse>(`/api/v1/admin/bans/${userId}`, body);
+  }
+
+  async instanceRevokeBan(userId: string): Promise<void> {
+    await this.delete(`/api/v1/admin/bans/${userId}`);
+  }
+
+  // ─── Blocked Hashes ────────────────────────────────
+
+  async listBlockedHashes(limit?: number, offset?: number): Promise<BlockedHashResponse[]> {
+    const params = new URLSearchParams();
+    if (limit !== undefined) params.set("limit", String(limit));
+    if (offset !== undefined) params.set("offset", String(offset));
+    const qs = params.toString();
+    return this.get<BlockedHashResponse[]>(`/api/v1/admin/blocked-hashes${qs ? `?${qs}` : ""}`);
+  }
+
+  async createBlockedHash(body: CreateBlockedHashRequest): Promise<BlockedHashResponse> {
+    return this.post<BlockedHashResponse>("/api/v1/admin/blocked-hashes", body);
+  }
+
+  async deleteBlockedHash(hashId: string): Promise<void> {
+    await this.delete(`/api/v1/admin/blocked-hashes/${hashId}`);
+  }
+
+  // ─── Content Filters ───────────────────────────────
+
+  async listContentFilters(serverId: string): Promise<ContentFilterResponse[]> {
+    return this.get<ContentFilterResponse[]>(`/api/v1/servers/${serverId}/content-filters`);
+  }
+
+  async createContentFilter(serverId: string, body: CreateContentFilterRequest): Promise<ContentFilterResponse> {
+    return this.post<ContentFilterResponse>(`/api/v1/servers/${serverId}/content-filters`, body);
+  }
+
+  async deleteContentFilter(serverId: string, filterId: string): Promise<void> {
+    await this.delete(`/api/v1/servers/${serverId}/content-filters/${filterId}`);
   }
 
   // ─── Timeouts ───────────────────────────────────────

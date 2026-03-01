@@ -456,6 +456,85 @@ export interface SetAdminRequest {
   is_admin: boolean;
 }
 
+// ─── Admin Report Triage ──────────────────────────────
+
+export interface AdminReportResponse {
+  id: string;
+  reporter_id: string;
+  reporter_username: string;
+  message_id: string;
+  channel_id: string;
+  reason: string;
+  status: string;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  admin_notes: string | null;
+  escalated_to: string | null;
+  escalated_at: string | null;
+  escalated_by: string | null;
+  created_at: string;
+}
+
+export interface UpdateReportRequest {
+  status: string;
+  admin_notes?: string;
+}
+
+export interface ReportCounts {
+  pending: number;
+  reviewed: number;
+  dismissed: number;
+  escalated: number;
+}
+
+// ─── Instance Bans ────────────────────────────────────
+
+export interface InstanceBanResponse {
+  id: string;
+  user_id: string;
+  username: string;
+  reason: string | null;
+  banned_by: string;
+  banned_by_username: string;
+  created_at: string;
+}
+
+export interface CreateInstanceBanRequest {
+  reason?: string;
+}
+
+// ─── Blocked Hashes ───────────────────────────────────
+
+export interface BlockedHashResponse {
+  id: string;
+  hash: string;
+  description: string | null;
+  added_by_username: string;
+  created_at: string;
+}
+
+export interface CreateBlockedHashRequest {
+  hash: string;
+  description?: string;
+}
+
+// ─── Content Filters ──────────────────────────────────
+
+export interface ContentFilterResponse {
+  id: string;
+  pattern: string;
+  filter_type: string;
+  action: string;
+  created_by: string;
+  created_at: string;
+}
+
+export interface CreateContentFilterRequest {
+  pattern: string;
+  filter_type?: string;
+  action?: string;
+}
+
 // ─── Invites ──────────────────────────────────────────
 
 export interface CreateInviteRequest {

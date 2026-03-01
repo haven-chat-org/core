@@ -25,3 +25,14 @@ export function decryptFile(encrypted: Uint8Array, key: Uint8Array, nonce: Uint8
   const sodium = getSodium();
   return sodium.crypto_secretbox_open_easy(encrypted, nonce, key);
 }
+
+/**
+ * Compute a SHA-256 hash of plaintext file bytes (before encryption).
+ * Used for known-bad hash matching without breaking E2EE.
+ */
+export async function hashFile(plaintext: Uint8Array): Promise<string> {
+  const digest = await crypto.subtle.digest("SHA-256", plaintext as unknown as ArrayBuffer);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
